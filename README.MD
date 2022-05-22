@@ -51,8 +51,7 @@ Authentication failed.
 Для реализации 2 части задания потребуется systemd версии 226 и выше, поэтому перехожу на centos8. ```https://github.com/systemd/systemd/commit/88ced61bf9673407f4b15bf51b1b408fd78c149d```
 
 1. Устанавливаю докер, добавляю пользователей в группу докер. 
-2. Включаю pam_cap, добавляю пользователей в capability.conf, выдаю /usr/bin/docker аналогичные права.
-3. Добавляю правило polkit для рестарта сервиса докер. 
+2. Добавляю правило polkit для рестарта сервиса докер. 
 
 ```
 cd /etc/yum.repos.d/
@@ -60,13 +59,9 @@ sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
 sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
 sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 sudo yum install -y docker-ce
-sudo setenforce 0
 sudo usermod -aG docker vagrant
 sudo usermod -aG docker one
 sudo newgrp docker 
-sudo echo "cap_net_bind_service one" > /etc/security/capability.conf
-sudo echo "cap_net_bind_service vagrant" >> /etc/security/capability.conf
-sudo setcap cap_net_bind_service=ei /usr/bin/docker
 sudo cp /vagrant/polkit /etc/polkit-1/rules.d/docker.rules
 ```
 
