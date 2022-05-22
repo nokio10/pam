@@ -36,6 +36,7 @@ sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/dock
 sudo yum install -y docker-ce
 sudo setenforce 0
 sudo usermod -aG docker vagrant
+sudo usermod -aG docker one
 sudo newgrp docker 
 sudo echo "cap_net_bind_service one" > /etc/security/capability.conf
 sudo echo "cap_net_bind_service vagrant" >> /etc/security/capability.conf
