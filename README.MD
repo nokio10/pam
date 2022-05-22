@@ -47,3 +47,37 @@ four@localhost's password:
 Authentication failed.
 ```
 
+### Дать конкретному пользователю права работать с докером и возможность рестартить докер сервис
+
+Для реализации 2 части задания потребуется systemd версии 226 и выше, поэтому перехожу на centos8.
+
+
+```
+cd /etc/yum.repos.d/
+sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+sudo yum install -y docker-ce
+sudo setenforce 0
+sudo usermod -aG docker vagrant
+sudo usermod -aG docker one
+sudo newgrp docker 
+sudo echo "cap_net_bind_service one" > /etc/security/capability.conf
+sudo echo "cap_net_bind_service vagrant" >> /etc/security/capability.conf
+sudo setcap cap_net_bind_service=ei /usr/bin/docker
+sudo cp /vagrant/polkit /etc/polkit-1/rules.d/docker.rules
+```
+
+Права выданы пользователям vagrant и one. Проверяю работу.
+
+```
+[vagrant@pam ~]$ docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+[vagrant@pam ~]$ systemctl restart docker
+[vagrant@pam ~]$ systemctl start docker
+[one@pam ~]$ systemctl restart docker
+[one@pam ~]$ docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+```
+
+Работает
