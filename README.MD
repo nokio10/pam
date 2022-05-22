@@ -18,14 +18,14 @@ sudo useradd four
 sudo groupadd admin
 sudo usermod -a -G admin one
 sudo usermod -a -G admin two
+sudo usermod -a -G admin vagrant
 sudo echo "Otus2022" |sudo passwd --stdin one &&\
 sudo echo "Otus2022" | sudo passwd --stdin two &&\
 sudo echo "Otus2022" | sudo passwd --stdin three &&\
 sudo echo "Otus2022" | sudo passwd --stdin four
 sudo bash -c "sed -i 's/^PasswordAuthentication.*$/PasswordAuthentication yes/' /etc/ssh/sshd_config
 for pkg in epel-release pam_script; do sudo yum install -y $pkg; done
-sudo chmod +x /vagrant/scr.sh
-sudo echo "account required pam_script.so /vagrant/scr.sh" >> /etc/pam.d/sshd
+sudo chmod +x /usr/local/bin/scr.sh
 sudo systemctl restart sshd
 ```
 
