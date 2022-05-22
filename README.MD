@@ -29,3 +29,21 @@ sudo echo "account required pam_script.so /vagrant/scr.sh" >> /etc/pam.d/sshd
 sudo systemctl restart sshd
 ```
 
+Проверяем работу pam
+
+```
+[vagrant@pam ~]$ ssh one@localhost
+The authenticity of host 'localhost (::1)' can't be established.
+ECDSA key fingerprint is SHA256:Fxny42eoeKK4dskcGb4fP/tou6Zo7zQuT3nt9ntkWqg.
+ECDSA key fingerprint is MD5:60:02:95:ee:e6:57:56:d0:40:83:c3:2e:75:1c:e1:b3.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added 'localhost' (ECDSA) to the list of known hosts.
+one@localhost's password:
+[one@pam ~]$ logout
+Connection to localhost closed.
+[vagrant@pam ~]$ ssh four@localhost
+four@localhost's password:
+/usr/local/bin/scr.sh failed: exit code 1
+Authentication failed.
+```
+
