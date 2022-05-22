@@ -2,8 +2,8 @@
 # vim: set ft=ruby :
 MACHINES = {
 :pam => {
-:box_name => "centos8",
-#:box_version => "2004.01",
+:box_name => "centos/8",
+:box_version => "2011.0",
 },
 }
 Vagrant.configure("2") do |config|
