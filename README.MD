@@ -78,3 +78,14 @@ CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 ```
 
 Работает
+
+У других пользователей, соответственно, ошибка.
+
+```
+[two@pam ~]$ docker ps
+Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Get "http://%2Fvar%2Frun%2Fdocker.sock/v1.24/containers/json": dial unix /var/run/docker.sock: connect: permission denied
+[two@pam ~]$ systemctl restart docker
+==== AUTHENTICATING FOR org.freedesktop.systemd1.manage-units ====
+Authentication is required to restart 'docker.service'.
+Authenticating as: root
+```
