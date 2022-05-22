@@ -34,13 +34,9 @@ sudo echo "Otus2022" | sudo passwd --stdin four
 sudo bash -c "sed -i 's/^PasswordAuthentication.*$/PasswordAuthentication yes/' /etc/ssh/sshd_config"
 sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 sudo yum install -y docker-ce
-sudo setenforce 0
 sudo usermod -aG docker vagrant
 sudo usermod -aG docker one
 sudo newgrp docker 
-sudo echo "cap_net_bind_service one" > /etc/security/capability.conf
-sudo echo "cap_net_bind_service vagrant" >> /etc/security/capability.conf
-sudo setcap cap_net_bind_service=ei /usr/bin/docker
 sudo cp /vagrant/sshd /etc/pam.d/sshd
 sudo cp /vagrant/scr.sh /usr/local/bin/scr.sh
 sudo chmod +x /usr/local/bin/scr.sh
