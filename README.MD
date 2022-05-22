@@ -8,7 +8,7 @@
 
 ### Запретить всем пользователям, кроме группы admin логин в выходные (суббота и воскресенье), без учета праздников
 
-Создаю четырех пользователей с паролями, группу admin, добавляю двух пользователей в группу admin, включаю парольную аутентификацию по ssh, конфигурирую pam_exec.
+Создаю четырех пользователей с паролями, группу admin, добавляю двух пользователей в группу admin, включаю парольную аутентификацию по ssh, копирую скрипт для pam_exec в /usr/local/bin/scr.sh. 
 
 ```
 sudo useradd one && \
@@ -24,7 +24,6 @@ sudo echo "Otus2022" | sudo passwd --stdin two &&\
 sudo echo "Otus2022" | sudo passwd --stdin three &&\
 sudo echo "Otus2022" | sudo passwd --stdin four
 sudo bash -c "sed -i 's/^PasswordAuthentication.*$/PasswordAuthentication yes/' /etc/ssh/sshd_config
-for pkg in epel-release pam_script; do sudo yum install -y $pkg; done
 sudo chmod +x /usr/local/bin/scr.sh
 sudo systemctl restart sshd
 ```
